@@ -86,7 +86,7 @@ class Site_Scanner(object):
 
 if __name__ == '__main__':
     import pprint
-    test_scanner = Site_Scanner("https://joann.com",[])
+    test_scanner = Site_Scanner("https://blockads.fivefilters.org/?pihole",[])
     pp = pprint.PrettyPrinter(indent=4)
     b = test_scanner.site_check()
     pp.pprint(b)
