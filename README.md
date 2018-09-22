@@ -10,6 +10,6 @@ $ ./setup.sh
 ```
 (~/Bowser_dir/src)$ python3 bowser.py <target site>
 ```
-#Whitelisting top level domains
+## Whitelisting top level domains
 To whitelist a domain that is directly included in the html you are searching open the json file located in ~/.bowser_whitelist
 From there you can add to the whitelist array property.
