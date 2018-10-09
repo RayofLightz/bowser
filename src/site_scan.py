@@ -17,6 +17,9 @@ class Site_Scanner(object):
         a = urlparse(url)
         if a.scheme == '':
             url = "https:" + url
+        if a.netloc == '':
+            return None
+             
         return r.get(url,headers={'referer':ref_link})
 
     def scan_html(self):
@@ -38,10 +41,16 @@ class Site_Scanner(object):
 
     def scan_js(self,link_list):
         ref_link = self.url
+        # the following regexs find urls and remove text inside of multi and single line comments
+        comment_remove = re.compile(r"(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|[^:|^](//.*)")
         regex = re.compile(r'(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?')
         for link in link_list:
+            print(link)
             b = self.get_autocorrected(link)
-            a = list(re.finditer(regex,b.text))
+            if b == None:
+                continue
+            c = re.sub(comment_remove,"",b.text) 
+            a = list(re.finditer(regex,c))
             for match in a:
                 yield match.group(0)
     def check_sum_js(self,link):
@@ -86,6 +95,7 @@ class Site_Scanner(object):
 
 if __name__ == '__main__':
     import pprint
+    # this domain has no thirdparty js
     test_scanner = Site_Scanner("https://blockads.fivefilters.org/?pihole",[])
     pp = pprint.PrettyPrinter(indent=4)
     b = test_scanner.site_check()
