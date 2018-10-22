@@ -45,7 +45,6 @@ class Site_Scanner(object):
         comment_remove = re.compile(r"(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|[^:|^](//.*)")
         regex = re.compile(r'(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?')
         for link in link_list:
-            print(link)
             b = self.get_autocorrected(link)
             if b == None:
                 continue
